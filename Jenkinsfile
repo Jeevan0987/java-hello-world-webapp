@@ -8,17 +8,17 @@ pipeline {
     }
         }
           
-           stage("Maven build"){
+           stage("java build stage"){
               steps {
                sh 'mvn clean package'
                sh "mv target/*.war target/myweb.war"  
               }
            }
       
-      stage("Tomcat deploy"){
+      stage("warfile deploy"){
          steps {
-          sshagent(['ec2-cred']) {
-          sh "scp -o StrictHostKeyChecking=no target/myweb.war ubuntu@172.31.16.164:/var/lib/tomcat8/webapps"
+          sshagent(['slave id']) {
+          sh "scp -o StrictHostKeyChecking=no target/myweb.war ubuntu@172.31.17.226:/var/lib/tomcat8/webapps"
 }
          
          }
